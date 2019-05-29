@@ -8,22 +8,26 @@
 
 import Foundation
 
-struct Lenght {
+struct Lenght: Convertible {
     
-    enum Units {
+    enum Units: Unit {
         case nanometer, micrometer, millimeter, centimeter, decimeter, meter, decameter, hectometer, kilometer, inch, foot, yard, mile
     }
     
-    static let unitList: [Units] = [.nanometer, .micrometer, .millimeter, .centimeter, .decimeter, .meter, .decameter, .hectometer, .kilometer, .inch, .foot, .yard, .mile]
-    static let unitNames: [String] = ["nanometer", "micrometer", "millimeter", "centimeter", "decimeter", "meter", "decameter", "hectometer", "kilometer", "inch", "foot", "yard", "mile"]
-    static let symbols: [String] = ["nm", "μm", "mm", "cm", "dm", "m", "dam", "hm", "km", "in", "ft", "yd", "mi"]
+    let unitList: [Unit] = [Units.nanometer, Units.micrometer, Units.millimeter, Units.centimeter, Units.decimeter, Units.meter, Units.decameter, Units.hectometer, Units.kilometer, Units.inch, Units.foot, Units.yard, Units.mile]
     
-    static func convert(_ fromValue: Double, from fromUnit: Units, to toUnit: Units) -> Double {
-        let meterValue = convertToMeter(fromValue, unit: fromUnit)
-        return convertMeterTo(toUnit, value: meterValue)
+    let unitNames: [String] = ["nanometer", "micrometer", "millimeter", "centimeter", "decimeter", "meter", "decameter", "hectometer", "kilometer", "inch", "foot", "yard", "mile"]
+    let symbols: [String] = ["nm", "μm", "mm", "cm", "dm", "m", "dam", "hm", "km", "in", "ft", "yd", "mi"]
+    
+    //Method which uses the two conversion methods below to achieve a full conversion
+    func convert(_ fromValue: Double, from fromUnit: Unit, to toUnit: Unit) -> Double {
+        let meterValue = Lenght.convertToMeter(fromValue, unit: fromUnit)
+        return Lenght.convertMeterTo(toUnit, value: meterValue)
     }
     
-    private static func convertToMeter(_ lenght: Double, unit: Lenght.Units) -> Double {
+    //Method which converts ANY data unit value to METER
+    private static func convertToMeter(_ lenght: Double, unit: Unit) -> Double {
+        guard let unit = unit as? Lenght.Units else {return 0}
         switch unit {
         case .nanometer:
             return (lenght / 1000000000) // x10^-9
@@ -54,7 +58,9 @@ struct Lenght {
         }
     }
     
-    private static func convertMeterTo(_ unit: Units, value: Double) -> Double {
+    //Method which converts a METER value to ANY other data units
+    private static func convertMeterTo(_ unit: Unit, value: Double) -> Double {
+        guard let unit = unit as? Lenght.Units else {return 0}
             switch unit {
             case .nanometer:
                 return (value * 1000000000) // x10^-9

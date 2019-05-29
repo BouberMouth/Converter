@@ -14,13 +14,21 @@ class ViewController: UIViewController {
     @IBOutlet weak var toLabel: UILabel!
     @IBOutlet weak var fromUnitPicker: UIPickerView!
     @IBOutlet weak var toUnitPicker: UIPickerView!
+    @IBOutlet weak var typePicker: UIPickerView!
     
-    var fromUnit: Lenght.Units? {
+    var conversionType: Convertible = Lenght() {
+        didSet {
+            toUnitPicker.reloadAllComponents()
+            fromUnitPicker.reloadAllComponents()
+        }
+    }
+    
+    var fromUnit: Unit? {
         didSet {
             applyConversion()
         }
     }
-    var toUnit: Lenght.Units? {
+    var toUnit: Unit? {
         didSet {
             applyConversion()
         }
@@ -38,6 +46,8 @@ class ViewController: UIViewController {
         fromUnitPicker.dataSource = self
         toUnitPicker.delegate = self
         toUnitPicker.dataSource = self
+        typePicker.dataSource = self
+        typePicker.delegate = self
         fromTextField.delegate = self
         fromTextField.placeholder = "Enter the value to convert"
         fromTextField.keyboardType = .decimalPad
@@ -47,7 +57,7 @@ class ViewController: UIViewController {
     //Handle converting and updating the UI
     private func applyConversion() {
         guard (fromValue != nil && fromUnit != nil && toUnit != nil) else {return}
-        let conversionResult = Lenght.convert(fromValue!, from: fromUnit!, to: toUnit!)
+        let conversionResult = conversionType.convert(fromValue!, from: fromUnit!, to: toUnit!)
         
         //Limit the decimal to 4 digits
         let fourDigitResult = round(conversionResult*10000)/10000
@@ -61,7 +71,7 @@ class ViewController: UIViewController {
     }
 }
 
-
+//PickerView methods
 extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -70,9 +80,11 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView == fromUnitPicker {
-            return Lenght.unitNames.count
+            return conversionType.unitNames.count
         } else if pickerView == toUnitPicker {
-            return Lenght.unitNames.count
+            return conversionType.unitNames.count
+        } else if pickerView == typePicker {
+            return ConversionTypes.strList.count
         } else {
             return 0
         }
@@ -80,9 +92,11 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView == fromUnitPicker {
-            return Lenght.unitNames[row].capitalized
+            return conversionType.unitNames[row].capitalized
         } else if pickerView == toUnitPicker {
-            return Lenght.unitNames[row].capitalized
+            return conversionType.unitNames[row].capitalized
+        } else if pickerView == typePicker {
+            return ConversionTypes.strList[row].capitalized
         } else {
             return ""
         }
@@ -90,15 +104,15 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == fromUnitPicker {
-            print("from \(Lenght.unitNames[row])")
-            fromUnit = Lenght.unitList[row]
+            fromUnit = conversionType.unitList[row]
         } else if pickerView == toUnitPicker {
-            print("to \(Lenght.unitNames[row])")
-            toUnit = Lenght.unitList[row]
+            toUnit = conversionType.unitList[row]
+        } else if pickerView == typePicker {
+            conversionType = ConversionTypes.types[row]
         }
     }
 }
-
+//TextField methods
 extension ViewController: UITextFieldDelegate {
     
     @objc private func textDidChange(_ textField: UITextField) {
