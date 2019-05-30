@@ -1,5 +1,5 @@
 //
-//  Data model.swift
+//  Data.swift
 //  Converter
 //
 //  Created by Antoine on 28/05/2019.
@@ -10,6 +10,9 @@ import Foundation
 
 struct Data: Convertible {
     
+    var defaultUnitIndex: Int {
+        return symbols.firstIndex(of: "B") ?? 0
+    }
     
     enum Units: Unit {
         case bit, byte, kilobyte, megabyte, gigabyte, terabyte

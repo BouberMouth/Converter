@@ -21,6 +21,8 @@ protocol Convertible {
     
     var symbols: [String] {get} // List of all symbols
     
+    var defaultUnitIndex: Int {get} //Index of the default unit, which is the base unit (meter, gram, liter...)
+    
     //Method to convert any unit type, privately using two static functions to first convert the value into a base unit, and then from this base unit to the expected unit.
     func convert(_ fromValue: Double, from fromUnit: Unit, to toUnit: Unit) -> Double
 }

@@ -16,10 +16,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var toUnitPicker: UIPickerView!
     @IBOutlet weak var typePicker: UIPickerView!
     
-    var conversionType: Convertible = Lenght() {
+    var conversionType: Convertible! {
         didSet {
-            toUnitPicker.reloadAllComponents()
-            fromUnitPicker.reloadAllComponents()
+            reloadPickerViews()
+            fromUnit = conversionType.unitList[fromUnitPicker.selectedRow(inComponent: 0)]
+            toUnit = conversionType.unitList[toUnitPicker.selectedRow(inComponent: 0)]
         }
     }
     
@@ -42,6 +43,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        conversionType = ConversionTypes.types[0]
         fromUnitPicker.delegate = self
         fromUnitPicker.dataSource = self
         toUnitPicker.delegate = self
@@ -52,6 +54,8 @@ class ViewController: UIViewController {
         fromTextField.placeholder = "Enter the value to convert"
         fromTextField.keyboardType = .decimalPad
         fromTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
+        fromUnitPicker.selectRow(conversionType.defaultUnitIndex, inComponent: 0, animated: false)
+        toUnitPicker.selectRow(conversionType.defaultUnitIndex, inComponent: 0, animated: false)
     }
     
     //Handle converting and updating the UI
@@ -111,7 +115,15 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             conversionType = ConversionTypes.types[row]
         }
     }
+    
+    func reloadPickerViews() {
+        toUnitPicker.reloadAllComponents()
+        fromUnitPicker.reloadAllComponents()
+        fromUnitPicker.selectRow(conversionType.defaultUnitIndex, inComponent: 0, animated: true)
+        toUnitPicker.selectRow(conversionType.defaultUnitIndex, inComponent: 0, animated: true)
+    }
 }
+
 //TextField methods
 extension ViewController: UITextFieldDelegate {
     

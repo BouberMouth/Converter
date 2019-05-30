@@ -1,5 +1,5 @@
 //
-//  Lenght model.swift
+//  Lenght.swift
 //  Converter
 //
 //  Created by Antoine on 28/05/2019.
@@ -9,6 +9,10 @@
 import Foundation
 
 struct Lenght: Convertible {
+    
+    var defaultUnitIndex: Int {
+        return symbols.firstIndex(of: "m") ?? 0
+    }
     
     enum Units: Unit {
         case nanometer, micrometer, millimeter, centimeter, decimeter, meter, decameter, hectometer, kilometer, inch, foot, yard, mile

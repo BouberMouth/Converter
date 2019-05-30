@@ -11,6 +11,9 @@ import Foundation
 
 struct Weight: Convertible {
     
+    var defaultUnitIndex: Int {
+        return symbols.firstIndex(of: "g") ?? 0
+    }
     
     enum Units: Unit {
         case milligram, centigram, decigram, gram, decagram, hectogram, kilogram, ton
