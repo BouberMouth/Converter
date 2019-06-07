@@ -9,12 +9,13 @@
 import Foundation
 
 struct ConversionTypes {
-    static let strList = ["lenght", "weight", "data"] //Names to display
+    static let strList = ["lenght", "weight", "data", "volume"] //Names to display
     
-    static let types: [Convertible] = [Lenght(), Weight(), Data()] //Instances to use for conversion
+    static let types: [Convertible] = [Lenght(), Weight(), Data(), Volume()] //Instances to use for conversion
 }
 
 protocol Convertible {
+    
     var unitList: [Unit] {get} //List of all enumeration case
     
     var unitNames: [String] {get} //List of all unit names
