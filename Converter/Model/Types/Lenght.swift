@@ -21,6 +21,7 @@ struct Lenght: Convertible {
     let unitList: [Unit] = [Units.nanometer, Units.micrometer, Units.millimeter, Units.centimeter, Units.decimeter, Units.meter, Units.decameter, Units.hectometer, Units.kilometer, Units.inch, Units.foot, Units.yard, Units.mile]
     
     let unitNames: [String] = ["nanometer", "micrometer", "millimeter", "centimeter", "decimeter", "meter", "decameter", "hectometer", "kilometer", "inch", "foot", "yard", "mile"]
+    
     let symbols: [String] = ["nm", "μm", "mm", "cm", "dm", "m", "dam", "hm", "km", "in", "ft", "yd", "mi"]
     
     //Method which uses the two conversion methods below to achieve a full conversion
@@ -34,15 +35,15 @@ struct Lenght: Convertible {
         guard let unit = unit as? Lenght.Units else {return 0}
         switch unit {
         case .nanometer:
-            return (lenght / 1000000000) // x10^-9
+            return (lenght / 1000000000)
         case .micrometer:
-            return (lenght / 1000000) // x10^-6
+            return (lenght / 1000000)
         case .millimeter:
-            return (lenght / 1000) // x10^-3
+            return (lenght / 1000)
         case .centimeter:
-            return (lenght / 100) // x10^-2
+            return (lenght / 100)
         case .decimeter:
-            return (lenght / 10) // x10^-1
+            return (lenght / 10)
         case .meter:
             return lenght
         case .decameter:
@@ -67,15 +68,15 @@ struct Lenght: Convertible {
         guard let unit = unit as? Lenght.Units else {return 0}
             switch unit {
             case .nanometer:
-                return (value * 1000000000) // x10^-9
+                return (value * 1000000000)
             case .micrometer:
-                return (value * 1000000) // x10^-6
+                return (value * 1000000)
             case .millimeter:
-                return (value * 1000) // x10^-3
+                return (value * 1000)
             case .centimeter:
-                return (value * 100) // x10^-2
+                return (value * 100)
             case .decimeter:
-                return (value * 10) // x10^-1
+                return (value * 10)
             case .meter:
                 return value
             case .decameter:

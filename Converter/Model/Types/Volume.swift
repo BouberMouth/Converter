@@ -19,7 +19,9 @@ struct Volume: Convertible {
     }
     
     let unitList: [Unit] = [Units.milliliter, Units.centiliter, Units.deciliter, Units.liter, Units.decaliter, Units.hectoliter, Units.kiloliter, Units.cubicCentimeter, Units.cubicMeter]
+    
     let unitNames: [String] = ["milliliter", "centiliter", "deciliter", "liter", "decaliter", "hectoliter", "kiloliter", "cubic centimeter", "cubic meter"]
+    
     let symbols: [String] = ["ml", "cl", "dl", "l", "dal", "hl", "kl", "cm³", "m³"]
     
     
@@ -29,16 +31,16 @@ struct Volume: Convertible {
         return Volume.convertLiterTo(toUnit, value: byteValue)
     }
     
-    //Method which converts ANY weight unit value to GRAM
+    //Method which converts ANY volume unit value to LITER.
     static private func convertToLiter(_ volume: Double, unit: Unit) -> Double {
         guard let unit = unit as? Volume.Units else {return 0}
         switch unit {
         case .milliliter:
-            return (volume / 1000) // x10^-3
+            return (volume / 1000)
         case .centiliter:
-            return (volume / 100) // x10^-2
+            return (volume / 100)
         case .deciliter:
-            return (volume / 10) // x10^-1
+            return (volume / 10)
         case .liter:
             return volume
         case .decaliter:
@@ -54,7 +56,7 @@ struct Volume: Convertible {
         }
     }
     
-    //Method which converts a GRAM value to ANY other weight units
+    //Method which converts a LITER value to ANY other volume unit.
     static private func convertLiterTo(_ unit: Unit, value: Double) -> Double {
         guard let unit = unit as? Volume.Units else {return 0}
         switch unit {

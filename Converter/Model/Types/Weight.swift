@@ -20,7 +20,9 @@ struct Weight: Convertible {
     }
     
     let unitList: [Unit] = [Units.milligram, Units.centigram, Units.decigram, Units.gram, Units.decagram, Units.hectogram, Units.kilogram, Units.ton]
+    
     let unitNames: [String] = ["milligram", "centigram", "decigram", "gram", "decagram", "hectogram", "kilogram", "ton"]
+    
     let symbols: [String] = ["mg", "cg", "dg", "g", "dag", "hg", "kg", "t"]
     
     
@@ -53,16 +55,16 @@ struct Weight: Convertible {
         }
     }
     
-    //Method which converts a GRAM value to ANY other weight units
+    //Method which converts a GRAM value to ANY other weight unit.
     static private func convertGramTo(_ unit: Unit, value: Double) -> Double {
         guard let unit = unit as? Weight.Units else {return 0}
         switch unit {
         case .milligram:
-            return (value * 1000) // x10^-3
+            return (value * 1000)
         case .centigram:
-            return (value * 100) // x10^-2
+            return (value * 100)
         case .decigram:
-            return (value * 10) // x10^-1
+            return (value * 10)
         case .gram:
             return value
         case .decagram:

@@ -19,7 +19,9 @@ struct Data: Convertible {
     }
     
     let unitList: [Unit] = [Units.bit, Units.byte, Units.kilobyte, Units.megabyte, Units.gigabyte, Units.terabyte]
+    
     let unitNames: [String] = ["bit", "byte", "kilobyte", "megabyte", "gigabyte", "terabyte"]
+    
     let symbols: [String] = ["bit", "B", "KB", "MB", "GB", "TB"]
     
     
@@ -29,7 +31,7 @@ struct Data: Convertible {
         return Data.convertByteTo(toUnit, value: byteValue)
     }
     
-    //Method which converts ANY data unit value to BYTE
+    //Method which converts ANY data unit value to BYTE.
     static private func convertToByte(_ value: Double, unit: Unit) -> Double {
         guard let unit = unit as? Data.Units else {return 0}
         switch unit {
@@ -48,7 +50,7 @@ struct Data: Convertible {
         }
     }
     
-    //Method which converts a BYTE value to ANY other data units
+    //Method which converts a BYTE value to ANY other data unit.
     static private func convertByteTo(_ unit: Unit, value: Double) -> Double {
         guard let unit = unit as? Data.Units else {return 0}
         switch unit {
