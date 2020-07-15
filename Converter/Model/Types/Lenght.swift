@@ -9,7 +9,7 @@
 import Foundation
 
 struct Lenght: Convertible {
-    
+
     var defaultUnitIndex: Int {
         return symbols.firstIndex(of: "m") ?? 0
     }
